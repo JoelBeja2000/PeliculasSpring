@@ -15,7 +15,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="descripcion" type="text"/>
-            <column name="anio_lanzamiento" type="int"/>
+            <column name="fecha_lanzamiento" type="int"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
