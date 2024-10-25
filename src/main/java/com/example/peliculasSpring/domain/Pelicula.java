@@ -58,7 +58,7 @@ public class Pelicula implements Serializable{
     }
 
     public String toString() {
-        return "Juego{" +
+        return "Pelicula{" +
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
             ", descripcion='" + getDescripcion() + "'" +
