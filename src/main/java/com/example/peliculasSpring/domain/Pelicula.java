@@ -1,6 +1,8 @@
 package com.example.peliculasSpring.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import jakarta.persistence.*;
@@ -10,9 +12,11 @@ import jakarta.persistence.*;
 @Table(name = "pelicula")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Pelicula implements Serializable{
-    public Pelicula(String nombre) {
+    public Pelicula(String nombre, String descripcion, LocalDate fechaLanzamiento) {
         this.nombre = nombre;
-    }
+        this.descripcion = descripcion;
+        this.fechaLanzamiento = fechaLanzamiento;
+    };
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +60,21 @@ public class Pelicula implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pelicula)) return false;
+        Pelicula pelicula = (Pelicula) o;
+        return id != null && id.equals(pelicula.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    
 
     public String toString() {
         return "Pelicula{" +
