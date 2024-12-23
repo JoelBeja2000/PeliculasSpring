@@ -18,6 +18,10 @@ public class Pelicula implements Serializable{
         this.fechaLanzamiento = fechaLanzamiento;
     };
 
+    public Pelicula() {
+        // Constructor vacío necesario para Hibernate
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,8 +49,8 @@ public class Pelicula implements Serializable{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public String getFechaLanzamiento() {
-        return nombre;
+    public LocalDate getFechaLanzamiento() {
+        return fechaLanzamiento;
     }
 
     public void setFechaLanzamiento(LocalDate fechaLanzamiento) {
@@ -81,7 +85,7 @@ public class Pelicula implements Serializable{
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
             ", descripcion='" + getDescripcion() + "'" +
-            ", fechaFin='" + getFechaLanzamiento() + "'" +
+            ", fechaLanzamiento='" + getFechaLanzamiento() + "'" +
        
             "}";
     }

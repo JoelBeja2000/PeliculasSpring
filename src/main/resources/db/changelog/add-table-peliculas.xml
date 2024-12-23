@@ -7,7 +7,7 @@
 
     <!-- Cambioset para crear la tabla 'peli' -->
     <changeSet id="2" author="tu-nombre">
-        <createTable tableName="peli" schemaName="peliculasjoel">
+        <createTable tableName="pelicula" schemaName="peliculasjoel">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -15,7 +15,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="descripcion" type="text"/>
-            <column name="fecha_lanzamiento" type="int"/>
+            <column name="fecha_lanzamiento" type="timestamp"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

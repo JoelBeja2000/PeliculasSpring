@@ -1,5 +1,7 @@
 package com.example.peliculasSpring.service;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,19 @@ public class PeliculaService {
     public List<Pelicula> obtenerTodasPeliculas() {
         return peliculaRepository.findAll();
     }
+
+     // Leer todas las películas
+     @Transactional(readOnly = true)
+     public Page<Pelicula> obtenerTodasPeliculasByPagination(Pageable pageable) {
+         return peliculaRepository.findAll(pageable);
+     }
+
+
+     // Obtener peliculas por nombre
+     @Transactional(readOnly = true)
+     public List<Pelicula> obtenerPeliculasPorNombre(String nombre) {
+         return peliculaRepository.findByNombreContainingIgnoreCase(nombre);
+     }
 
     // Leer una película por ID
     @Transactional(readOnly = true)
