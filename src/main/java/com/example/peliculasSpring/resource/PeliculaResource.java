@@ -4,25 +4,37 @@ package com.example.peliculasSpring.resource;
 
 import com.example.peliculasSpring.domain.Pelicula;
 import com.example.peliculasSpring.service.PeliculaService;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.peliculasSpring.domain.Pagination;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/peliculas")
 public class PeliculaResource {
 
     private final PeliculaService peliculaService;
+    private final ObjectMapper objectMapper;
+    
 
-    public PeliculaResource(PeliculaService peliculaService) {
+
+    public PeliculaResource(PeliculaService peliculaService, ObjectMapper objectMapper) {
         this.peliculaService = peliculaService;
+        this.objectMapper = objectMapper;
     }
 
 
@@ -49,10 +61,31 @@ public class PeliculaResource {
     
    
     @PostMapping
-    public Pelicula createPelicula(@RequestBody Pelicula pelicula) {
-        return peliculaService.guardarPelicula(pelicula);
+    public Pelicula crearPelicula(@RequestPart("pelicula") String pelicula, @RequestPart("file") MultipartFile file ) {
+	
+    Path directoryPath = Paths.get("src\\main\\resources\\static\\images");
+    String absolutePath = directoryPath.toFile().getAbsolutePath();
+   
+
+    try {   
+        Pelicula peliculaMap = objectMapper.readValue(pelicula, Pelicula.class);
+
+        byte[] portadaByte = file.getBytes();
+        Path rutaImagen = Paths.get(absolutePath + "\\" + file.getOriginalFilename());
+        Files.write(rutaImagen, portadaByte);
+
+        return peliculaService.guardarPelicula(peliculaMap);
+
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+        return null;
     }
 
+    
+    
+    
+    }
    
     @PutMapping("/{id}")
     public Pelicula updatePelicula(@PathVariable Long id, @RequestBody Pelicula pelicula) {

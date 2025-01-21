@@ -5,6 +5,10 @@ import java.util.Objects;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 import jakarta.persistence.*;
 
 
@@ -31,8 +35,14 @@ public class Pelicula implements Serializable{
 
     @Column (name = "descripcion" )
     private String descripcion;
+
     @Column (name = "fecha_lanzamiento" )
+    
     private LocalDate fechaLanzamiento;
+    
+    @Column (name = "portada" )
+    private String portada;
+    
 
     public Long getId() {
         return id;
@@ -65,6 +75,14 @@ public class Pelicula implements Serializable{
         this.descripcion = descripcion;
     }
 
+    public String getPortada() {
+        return portada;
+    }
+
+    public void setPortada(String portada) {
+        this.portada = portada;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +104,7 @@ public class Pelicula implements Serializable{
             ", nombre='" + getNombre() + "'" +
             ", descripcion='" + getDescripcion() + "'" +
             ", fechaLanzamiento='" + getFechaLanzamiento() + "'" +
+            ", portada='" + getPortada() + "'" +
        
             "}";
     }
